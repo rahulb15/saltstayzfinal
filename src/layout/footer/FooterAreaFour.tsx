@@ -211,7 +211,7 @@ const FooterAreaFour = () => {
                   <p>
                     Copyright @ 2024{" "}
                     <Link
-                      href="/https://themeforest.net/user/bdevs"
+                      href="#"
                       target="_blank"
                     >
                       Saltstayz
