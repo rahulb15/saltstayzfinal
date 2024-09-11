@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
                             <div className="policy-wrapper p-relative z-index-1">
                                 <div className="policy-item">
                                     <h4 className="policy-title">Introduction</h4>
-                                    <p>Thank you for visiting Tourigo. This Privacy Policy outlines how we collect, use, disclose,
+                                    <p>Thank you for visiting Saltstayz. This Privacy Policy outlines how we collect, use, disclose,
                                         and manage your personal information. By using our website, you agree to the terms of this
                                         Privacy Policy.</p>
                                 </div>

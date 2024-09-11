@@ -11,7 +11,7 @@ const TermsConditions = () => {
                             <div className="policy-wrapper p-relative z-index-1">
                                 <div className="policy-item">
                                     <h4 className="policy-title">Introduction</h4>
-                                    <p>Welcome to Tourigo. These Terms and Conditions govern your use of our website. By accessing
+                                    <p>Welcome to Saltstayz. These Terms and Conditions govern your use of our website. By accessing
                                         or using our website, you agree to be bound by these Terms and Conditions and our Privacy
                                         Policy. If you do not agree to these Terms and Conditions, please do not use our website.</p>
                                 </div>
@@ -46,7 +46,7 @@ const TermsConditions = () => {
 
                                 <div className="policy-item">
                                     <h4 className="policy-title">Limitation of Liability</h4>
-                                    <p>In no event shall Tourigo INC, nor its directors, employees, partners, agents, suppliers, or
+                                    <p>In no event shall Saltstayz INC, nor its directors, employees, partners, agents, suppliers, or
                                         affiliates, be liable for any indirect, incidental, special, consequential, or punitive
                                         damages, including without limitation, loss of profits, data, use, goodwill, or other
                                         intangible losses, resulting from (i) your access to or use of or inability to access or use

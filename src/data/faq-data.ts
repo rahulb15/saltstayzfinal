@@ -3,43 +3,43 @@ import { IFaqInterface } from "@/interFace/interFace";
 //faq data start
 export const faqData: IFaqInterface[] = [
   {
-    question: "What does Tourigo offer?",
+    question: "What does Saltstayz offer?",
     answer:
-      "Tourigo offers a wide range of tour and travel services, including guided tours, transportation arrangements, accommodation bookings, and customized travel packages.",
+      "Saltstayz offers a wide range of tour and travel services, including guided tours, transportation arrangements, accommodation bookings, and customized travel packages.",
     id: "One",
   },
   {
-    question: "Where does Tourigo operate?",
+    question: "Where does Saltstayz operate?",
     answer:
-      "Tourigo operates globally, providing services in popular tourist destinations around the world. Whether you're looking to explore historical landmarks, relax on exotic beaches, or embark on adventurous expeditions, Tourigo has you covered.",
+      "Saltstayz operates globally, providing services in popular tourist destinations around the world. Whether you're looking to explore historical landmarks, relax on exotic beaches, or embark on adventurous expeditions, Saltstayz has you covered.",
     id: "Two",
   },
   {
-    question: "How can I book a tour with Tourigo?",
+    question: "How can I book a tour with Saltstayz?",
     answer:
-      "Booking a tour with Tourigo is easy. You can visit our website to browse through our available tours and packages, select your desired itinerary, and make a reservation online. Alternatively, you can contact our customer service team for personalized assistance and recommendations.",
+      "Booking a tour with Saltstayz is easy. You can visit our website to browse through our available tours and packages, select your desired itinerary, and make a reservation online. Alternatively, you can contact our customer service team for personalized assistance and recommendations.",
     id: "Three",
   },
   {
-    question: "Are Tourigo tours guided?",
+    question: "Are Saltstayz tours guided?",
     answer:
       "Yes, most of our tours are guided by experienced and knowledgeable professionals who are passionate about sharing the wonders of each destination with our clients. Our guides are fluent in multiple languages and are dedicated to providing an enriching and memorable experience for all participants.",
     id: "Four",
   },
   {
-    question: "What types of transportation does Tourigo provide?",
+    question: "What types of transportation does Saltstayz provide?",
     answer:
-      "Tourigo offers various transportation options to suit your travel preferences and requirements. Whether you prefer private car transfers, group coach tours, train journeys, or even chartered flights, we can arrange the appropriate mode of transportation for your journey.",
+      "Saltstayz offers various transportation options to suit your travel preferences and requirements. Whether you prefer private car transfers, group coach tours, train journeys, or even chartered flights, we can arrange the appropriate mode of transportation for your journey.",
     id: "Five",
   },
   {
-    question: "Can Tourigo customize travel packages?",
+    question: "Can Saltstayz customize travel packages?",
     answer:
       "Absolutely! We understand that every traveler is unique, which is why we offer customizable travel packages tailored to your specific interests, budget, and schedule. Whether you're planning a romantic honeymoon, a family vacation, or a corporate retreat, our team will work closely with you to create a personalized itinerary that exceeds your expectations.",
     id: "Six",
   },
   {
-    question: "What safety measures does Tourigo have in place?",
+    question: "What safety measures does Saltstayz have in place?",
     answer:
       "The safety and well-being of our clients are our top priorities. We adhere to strict safety protocols and guidelines set by local authorities and health organizations to ensure a safe and comfortable travel experience for everyone. From sanitation practices to emergency preparedness, we take every precaution to mitigate risks and provide peace of mind to our clients.",
     id: "Seven",
@@ -51,15 +51,15 @@ export const faqData: IFaqInterface[] = [
     id: "Eight",
   },
   {
-    question: "Is travel insurance included in Tourigo packages?",
+    question: "Is travel insurance included in Saltstayz packages?",
     answer:
       "Travel insurance is not typically included in our standard packages, but we highly recommend purchasing comprehensive travel insurance to protect yourself against unforeseen circumstances such as trip cancellations, medical emergencies, or lost luggage. Our team can assist you in selecting the appropriate insurance coverage for your trip.",
     id: "Nine",
   },
   {
-    question: "How can I contact Tourigo for further assistance?",
+    question: "How can I contact Saltstayz for further assistance?",
     answer:
-      "You can reach out to Tourigo's customer service team via email, phone, or live chat on our website. Our friendly and knowledgeable representatives are available to assist you with any inquiries, booking requests, or travel assistance you may need. We strive to provide prompt and efficient support to ensure a seamless and enjoyable travel experience for our clients.",
+      "You can reach out to Saltstayz's customer service team via email, phone, or live chat on our website. Our friendly and knowledgeable representatives are available to assist you with any inquiries, booking requests, or travel assistance you may need. We strive to provide prompt and efficient support to ensure a seamless and enjoyable travel experience for our clients.",
     id: "Ten",
   },
 ];
@@ -69,9 +69,9 @@ export const faqData: IFaqInterface[] = [
 //index faq data start
 export const indexFaqData: IFaqInterface[] = [
   {
-    question: "What is Tourigo? how does it work?",
+    question: "What is Saltstayz? how does it work?",
     answer:
-      "Tourigo is a ready-made layout for tour and travel websites, simplifying the process of creating and organizing your {`site's`} content. Utilize a well-documented codebase for seamless customization and updates. Opt for extensively documented code repositories to facilitate your customization efforts with ease.",
+      "Saltstayz is a ready-made layout for tour and travel websites, simplifying the process of creating and organizing your {`site's`} content. Utilize a well-documented codebase for seamless customization and updates. Opt for extensively documented code repositories to facilitate your customization efforts with ease.",
     id: "Eleven",
   },
   {

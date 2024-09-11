@@ -29,7 +29,7 @@ const FooterOne = () => {
                     </div>
                     <div className="footer-widget-content">
                       <p>
-                        Welcome to Tourigo, your gateway to unforgettable
+                        Welcome to Saltstayz, your gateway to unforgettable
                         adventures and immersive travel experiences. Explore
                         with us and let your journey begin!
                       </p>
@@ -212,7 +212,7 @@ const FooterOne = () => {
                       href="https://themeforest.net/user/bdevs"
                       target="_blank"
                     >
-                      Tourigo
+                      Saltstayz
                     </Link>{" "}
                     . All Right Reserved
                   </p>

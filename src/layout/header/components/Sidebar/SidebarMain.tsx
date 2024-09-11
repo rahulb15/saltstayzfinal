@@ -55,7 +55,7 @@ const SidebarMain = () => {
                 </div>
               </div>
               <div className="offcanvas-about d-none d-lg-block mb-25">
-                <h4 className="offcanvas-title-meta">About Tourigo</h4>
+                <h4 className="offcanvas-title-meta">About Saltstayz</h4>
                 <p>
                   Explore stunning destinations and create immersive travel
                   experiences that inspire wanderlust and captivate your

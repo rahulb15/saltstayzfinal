@@ -77,7 +77,7 @@ const AboutStyleTwo = () => {
                 <div className="section-title-wrapper mb-35">
                   <span className="section-subtitle mb-15">About Us</span>
                   <h2 className="section-title mb-20">
-                    Discover Limitless Possibilities with Tourigo.
+                    Discover Limitless Possibilities with Saltstayz.
                   </h2>
                 </div>
                 <div className="about-list">

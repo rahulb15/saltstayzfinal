@@ -155,13 +155,13 @@ const OrderMain = () => {
 
                           <li className="order-info-list-desc">
                             <p>
-                              Tourigo Short sleeve t-shirts <span> x 2</span>
+                              Saltstayz Short sleeve t-shirts <span> x 2</span>
                             </p>
                             <span>$499.00</span>
                           </li>
                           <li className="order-info-list-desc">
                             <p>
-                              Tourigo Backpack <span> x 1</span>
+                              Saltstayz Backpack <span> x 1</span>
                             </p>
                             <span>$140.00</span>
                           </li>

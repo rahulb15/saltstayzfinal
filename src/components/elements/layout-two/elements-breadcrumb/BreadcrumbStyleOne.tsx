@@ -19,7 +19,7 @@ const BreadcrumbStyleOne = () => {
                     <div className="bd-breadcrumb-list">
                       <span>
                         <Link href="/home">
-                          <i className="icon-home"></i>Tourigo
+                          <i className="icon-home"></i>Saltstayz
                         </Link>
                       </span>
                       <span>Breadcrumb</span>

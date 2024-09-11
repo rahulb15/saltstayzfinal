@@ -20,7 +20,7 @@ const DownloadArea = () => {
                                         <span className="section-subtitle color-warning mb-15">Download Now!</span>
                                         <h2 className="section-title white-text mb-10">Get 20% off your Best App Tour booking
                                         </h2>
-                                        <p className="white-text">Booking better on the app. Use promo code “Tourigo”</p>
+                                        <p className="white-text">Booking better on the app. Use promo code “Saltstayz”</p>
                                     </div>
                                     <h6 className="download-btn-title">Get a magic link sent to your email</h6>
                                     <div className="download-btn-wrap flex-wrap">

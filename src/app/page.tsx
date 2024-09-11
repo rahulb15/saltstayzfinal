@@ -9,7 +9,7 @@ import HomeFourMain from "@/components/home-four/HomeFourMain";
 const Home = () => {
   return (
     <>
-      <MetaData pageTitle="Wellcome To Tourigo">
+      <MetaData pageTitle="Wellcome To Saltstayz">
         <Wrapper>
           <main>
             {/* <IndexMain /> */}

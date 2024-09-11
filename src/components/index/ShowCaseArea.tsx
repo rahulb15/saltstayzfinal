@@ -13,7 +13,7 @@ const ShowCaseArea = () => {
                     <div className="row justify-content-center">
                         <div className="col-xl-5">
                             <div className="section-title-wrapper text-center section-title-space">
-                                <span className="section-subtitle text-warning mb-10">Tourigo Inner Pages</span>
+                                <span className="section-subtitle text-warning mb-10">Saltstayz Inner Pages</span>
                                 <h2 className="section-title white-text">48+ Awesome Inner Pages</h2>
                             </div>
                         </div>

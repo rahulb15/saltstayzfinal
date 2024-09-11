@@ -194,11 +194,11 @@ const ProductDetailsSection = ({ id }: idType) => {
                 </div>
               </div>
               <p className="mb-15">
-                Tourigo Short Sleeve T-shirts offer a perfect blend of style,
+                Saltstayz Short Sleeve T-shirts offer a perfect blend of style,
                 comfort, and durability. Crafted with high-quality materials,
                 these T-shirts are designed to elevate your casual wardrobe.
                 Whether {`you're`} exploring the outdoors or enjoying a
-                laid-back day in the city, Tourigo T-shirts are your go-to
+                laid-back day in the city, Saltstayz T-shirts are your go-to
                 choice for effortless fashion.
               </p>
               <div className="product-details-price mb-10">

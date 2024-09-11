@@ -58,7 +58,7 @@ const BannerThree = () => {
                         data-wow-delay=".4s"
                       >
                         Uncover Your Dream Tour on{" "}
-                        <span className="theme-text">Tourigo!</span>
+                        <span className="theme-text">Saltstayz!</span>
                       </h1>
                       <p className="mb-45">
                         Lorem ipsum dolor sit amet consectetur adipiscing elit

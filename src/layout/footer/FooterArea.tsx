@@ -12,11 +12,11 @@ const FooterArea = () => {
                 <div className="footer-inner text-center">
                   <div className="demo-footer-text">
                     <h2 className="mb-15 white-text">
-                      Start Build Your Website With Tourigo
+                      Start Build Your Website With Saltstayz
                     </h2>
                   </div>
                   <p className="footer-demo-description">
-                    Purchase Tourigo today and start to creating your beautiful
+                    Purchase Saltstayz today and start to creating your beautiful
                     tour and travel website.
                   </p>
                   <div className="">
@@ -50,7 +50,7 @@ const FooterArea = () => {
                       href="https://themeforest.net/user/bdevs"
                       target="_blank"
                     >
-                      Tourigo
+                      Saltstayz
                     </Link>{" "}
                     . All Right Reserved
                   </p>

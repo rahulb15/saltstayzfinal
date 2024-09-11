@@ -78,7 +78,7 @@ const ReviewComments = () => {
                   </div>
                   <div className="content">
                     <p className="description">
-                      I recently purchased a few Tourigo Short Sleeve T-shirts,
+                      I recently purchased a few Saltstayz Short Sleeve T-shirts,
                       and I {`couldn't`} be happier with my decision. These
                       shirts have quickly become my go-to choice for everyday
                       wear. First and foremost, the comfort level of these

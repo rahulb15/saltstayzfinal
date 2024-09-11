@@ -69,7 +69,7 @@ const ProductInfoDetails = () => {
                     <div className="information-material mb-20">
                       <h5 className="information-title mb-10">Material:</h5>
                       <p>
-                        Made from premium cotton fabric, Tourigo Short Sleeve
+                        Made from premium cotton fabric, Saltstayz Short Sleeve
                         T-shirts ensure breathability and softness against the
                         skin. The fabric blend is carefully selected to provide
                         comfort and ease of movement throughout the day.
@@ -79,7 +79,7 @@ const ProductInfoDetails = () => {
                       <h5 className="information-title mb-10">Design:</h5>
                       <p>
                         Featuring a classic crew neck design and short sleeves,
-                        Tourigo T-shirts boast a timeless silhouette suitable
+                        Saltstayz T-shirts boast a timeless silhouette suitable
                         for various occasions. The shirts are available in a
                         range of colors and sizes to cater to diverse
                         preferences and body types.
@@ -88,7 +88,7 @@ const ProductInfoDetails = () => {
                     <div className="information-durability mb-20">
                       <h5 className="information-title mb-10">Durability:</h5>
                       <p>
-                        Built to last, Tourigo Short Sleeve T-shirts undergo
+                        Built to last, Saltstayz Short Sleeve T-shirts undergo
                         rigorous quality control measures to ensure longevity
                         and resilience. The reinforced stitching and superior
                         construction ensure that these T-shirts withstand
@@ -100,7 +100,7 @@ const ProductInfoDetails = () => {
                       <h5 className="information-title mb-10">Versatility:</h5>
                       <p>
                         Whether {`you're`} dressing up for a casual outing or
-                        dressing down for a relaxed day at home, Tourigo
+                        dressing down for a relaxed day at home, Saltstayz
                         T-shirts effortlessly transition between different
                         settings. Pair them with jeans, shorts, or joggers for a
                         laid-back ensemble that exudes effortless style.
@@ -111,7 +111,7 @@ const ProductInfoDetails = () => {
                         Care Instructions:
                       </h5>
                       <p>
-                        To maintain the quality and appearance of your Tourigo
+                        To maintain the quality and appearance of your Saltstayz
                         Short Sleeve T-shirts, machine wash them in cold water
                         with like colors. Avoid using bleach and tumble dry on
                         low heat. For best results, iron the T-shirts on a low
@@ -123,7 +123,7 @@ const ProductInfoDetails = () => {
                         Sustainability:
                       </h5>
                       <p>
-                        At Tourigo, we prioritize sustainability and ethical
+                        At Saltstayz, we prioritize sustainability and ethical
                         practices in our manufacturing processes. Our T-shirts
                         are crafted with eco-friendly materials and adhere to
                         responsible production standards, minimizing our
@@ -258,7 +258,7 @@ const ProductInfoDetails = () => {
                   aria-labelledby="pills-specifications-tab"
                 >
                   <h5 className="mb-20">
-                    Tourigo Short Sleeve T-Shirt Specifications
+                    Saltstayz Short Sleeve T-Shirt Specifications
                   </h5>
                   <div className="shop-specifications table-responsive">
                     <table className="table table-striped">

@@ -57,7 +57,7 @@ const CtaStyleEight = () => {
                     <div className="newsletter-notice-text">
                       <span>
                         Hi Alex! <br />
-                        Welcome to Tourigo
+                        Welcome to Saltstayz
                       </span>
                     </div>
                   </div>

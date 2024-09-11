@@ -58,13 +58,13 @@
 //                 <>
 //                   <li className="order-info-list-desc">
 //                     <p>
-//                       Tourigo Short sleeve t-shirts <span> x 1</span>
+//                       Saltstayz Short sleeve t-shirts <span> x 1</span>
 //                     </p>
 //                     <span>$499:00</span>
 //                   </li>
 //                   <li className="order-info-list-desc">
 //                     <p>
-//                       Tourigo Backpack - 21L <span> x 1</span>
+//                       Saltstayz Backpack - 21L <span> x 1</span>
 //                     </p>
 //                     <span>$999:00</span>
 //                   </li>
