@@ -1,0 +1,20 @@
+.bdBannerArea {
+    position: relative;
+  }
+  
+ .filter {
+    position: absolute;
+    top: 90%;
+    left: 5%;
+    width: 90%;
+    z-index: 1;
+    background-color: #a5daa3;
+    padding: 3px;
+    border-radius: 20px;
+    box-shadow: 0 20px 36px rgba(28, 112, 42, 0.15);
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+  
