@@ -106,7 +106,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setRooms } from "@/redux/slices/roomSlice";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { RootState } from "@/redux/store";
 interface ItourPropsType {
   tour: any;
@@ -169,7 +169,7 @@ const RoomSingleCard: React.FC<ItourPropsType> = ({ tour }) => {
     <div className="room-card" onClick={handleClick}>
       <div className="room-card-wrapper">
         <div className="room-image-section">
-          <div className="room-main-image">
+          <div className="room-main-image" onClick={handleClick} style={{ cursor: "pointer" }}>
             <Image
               src={tour.img}
               loader={imageLoader}
@@ -223,16 +223,17 @@ const RoomSingleCard: React.FC<ItourPropsType> = ({ tour }) => {
               <p className="per-night">Per Night</p>
             </div>
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setModalData(tour);
-              }}
+              // onClick={(e) => {
+              //   e.stopPropagation();
+              //   setModalData(tour);
+              // }}
+              onClick={handleClick}
               className="booking-btn"
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#popUpBookingForm"
             >
-              Login to Book Now & Pay Later!
+             Book Now & Pay Later!
             </button>
           </div>
         </div>

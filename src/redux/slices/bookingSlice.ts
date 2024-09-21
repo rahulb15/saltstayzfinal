@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
-
-
 interface BookingState {
   bookings: any[];
+  bookingNumber: string | null;
+  discountedBookings: any[];
 }
 
 const initialState: BookingState = {
   bookings: [],
+  bookingNumber: null,
+  discountedBookings: [],
 };
 
 export const bookingSlice = createSlice({
@@ -43,16 +45,38 @@ export const bookingSlice = createSlice({
       state.bookings = [];
       toast.success("All bookings cleared", { duration: 2000 });
     },
-    updateBookingQuantity: (state, action: PayloadAction<{ Package_Id: string; quantity: number }>) => {
-      const bookingIndex = state.bookings.findIndex(b => b.Package_Id === action.payload.Package_Id);
+    updateBookingQuantity: (
+      state,
+      action: PayloadAction<{ Package_Id: string; quantity: number }>
+    ) => {
+      const bookingIndex = state.bookings.findIndex(
+        (b) => b.Package_Id === action.payload.Package_Id
+      );
       if (bookingIndex !== -1) {
         state.bookings[bookingIndex].quantity = action.payload.quantity;
         toast.success("Booking quantity updated", { duration: 2000 });
       }
     },
+    setBookingNumber: (state, action: PayloadAction<string>) => {
+      state.bookingNumber = action.payload;
+    },
+    setDiscountedBookings: (state, action: PayloadAction<any[]>) => {
+      state.discountedBookings = action.payload;
+    },
+    removeCoupon: (state) => {
+      state.discountedBookings = [];
+    },
   },
 });
 
-export const { addBooking, removeBooking, clearBookings, updateBookingQuantity } = bookingSlice.actions;
+export const {
+  addBooking,
+  removeBooking,
+  clearBookings,
+  updateBookingQuantity,
+  setBookingNumber,
+  setDiscountedBookings,
+  removeCoupon,
+} = bookingSlice.actions;
 
 export default bookingSlice.reducer;

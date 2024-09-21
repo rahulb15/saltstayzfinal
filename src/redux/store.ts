@@ -18,6 +18,7 @@ import { bookingSlice } from "./slices/bookingSlice";
 import appSlice from "./slices/appSlice";
 import roomSlice from "./slices/roomSlice";
 import formDataSlice from "./slices/formDataSlice";
+import confirmedBookingSlice from "./slices/confirmedBookingSlice";
 
 const createNoopStorage = () => {
   return {
@@ -52,6 +53,7 @@ const persistedReducer = persistReducer(
     app: appSlice,
     room: roomSlice,
     formData: formDataSlice,
+    confirmedBooking: confirmedBookingSlice,
   })
 );
 

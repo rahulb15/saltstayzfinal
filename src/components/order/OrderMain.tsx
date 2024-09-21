@@ -1,41 +1,91 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
 import Breadcrumb from "../common/breadcrumb/BreadCrumb";
 import OrderConfirmIcon from "@/svg/OrderConfirmIcon";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-
+import { setConfirmedBooking } from "@/redux/slices/confirmedBookingSlice";
+import { clearBookings } from "@/redux/slices/bookingSlice";
+import { setBookings } from "@/redux/slices/appSlice";
+import { resetFormData } from "@/redux/slices/formDataSlice";
+import { setRooms } from "@/redux/slices/roomSlice";
 const OrderMain = () => {
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
+  const dispatch = useDispatch();
+  const confirmedBooking = useSelector((state: RootState) => state.confirmedBooking.bookingDetails);
+  const bookingNumber = useSelector((state: RootState) => state.booking.bookingNumber);
+  const bookings = useSelector((state: RootState) => state.booking.bookings);
+  const bookingData = useSelector((state: RootState) => state.app.bookings);
 
-  const totalPrice = cartProducts.reduce(
-    (total, product) => total + (product.price ?? 0) * (product.quantity ?? 0),
-    0
-  );
+  useEffect(() => {
+    if (!confirmedBooking && bookings.length > 0 && bookingData.length > 0) {
+      const confirmedBookingData = {
+        bookingNumber,
+        bookings,
+        bookingData,
+      };
+      dispatch(setConfirmedBooking(confirmedBookingData));
+    }
+  }, [confirmedBooking, bookings, bookingData, bookingNumber, dispatch]);
 
-  const shippingObj = localStorage.getItem("Shiping Info");
+  useEffect(() => {
+    return () => {
+      // Cleanup function to reset other slices when component unmounts
+      dispatch(clearBookings());
+      dispatch(setBookings([]));
+      dispatch(resetFormData());
+      dispatch(setRooms({ rooms: [] }));
+    };
+  }, [dispatch]);
 
-  const parts = shippingObj ? shippingObj.split(" ") : [];
-  let price = "";
-  let shippingTitle = "";
-  // Check if parts is not empty and has at least two elements
-  if (parts.length >= 2) {
-    // Combine all parts except the last one for the shipping title
-    shippingTitle = parts.slice(0, parts.length - 1).join(" ");
+  const calculateNights = (checkIn: string, checkOut: string) => {
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    const diff = end.getTime() - start.getTime();
+    return Math.ceil(diff / (1000 * 3600 * 24));
+  };
 
-    // The last part is the price
-    price = parts[parts.length - 1];
-  } else {
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (!confirmedBooking) {
+    return <div>Loading...</div>;
   }
-  const priceNum = parseInt(price);
-  const totalAmount = totalPrice + priceNum;
+
+  const { bookingNumber: confirmedBookingNumber, bookings: confirmedBookings, bookingData: confirmedBookingData } = confirmedBooking;
+
+  const total = confirmedBookings[0]?.room_rates_info.totalprice_inclusive_all || 0;
 
   return (
     <>
-      <Breadcrumb titleOne="Order Confirm" titleTwo="Order" />
-      <section className="order-area section-space">
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          .print-section, .print-section * {
+            visibility: visible;
+          }
+          .print-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+          .no-print {
+            display: none;
+          }
+        }
+      `}</style>
+      <div className="no-print">
+        <Breadcrumb titleOne="Booking Confirm" titleTwo="Booking" />
+      </div>
+      <section className="order-area section-space print-section">
         <div className="container">
           <div className="row gx-0 justify-content-center">
             <div className="col-xxl-10 col-xl-10 col-lg-10 col-md-12">
@@ -49,17 +99,13 @@ const OrderMain = () => {
                     </div>
                     <div className="order-details-content">
                       <h3 className="order-details-title mb-15">
-                        Your Order Confirmed
+                        Your Hotel Booking is Confirmed
                       </h3>
                       <p>
-                        {`We're`} excited to inform you that your order is on
-                        its way! As soon as your package ships, {`we'll`} send
-                        you a shipping confirmation email with all the necessary
-                        details to track your delivery.
+                        We're excited to welcome you to our hotel! Your booking has been confirmed and we look forward to providing you with a comfortable stay.
                       </p>
                       <p>
-                        Thank you for choosing us for your purchase. We
-                        appreciate your patience and support.
+                        If you need to make any changes or have any questions, please don't hesitate to contact us.
                       </p>
                     </div>
                   </div>
@@ -67,132 +113,72 @@ const OrderMain = () => {
                     <div className="row justify-content-start gy-24">
                       <div className="col-xl-3 col-lg-6 col-sm-6">
                         <div className="order-details-item">
-                          <h4>Order Date:</h4>
-                          <p>February 29 2024</p>
+                          <h4>Booking Date:</h4>
+                          <p>{formatDate(new Date().toISOString())}</p>
                         </div>
                       </div>
                       <div className="col-xl-3 col-lg-6 col-sm-6">
                         <div className="order-details-item">
-                          <h4>Expected Delivery: </h4>
-                          <p>March 25 2024</p>
+                          <h4>Check-in Date:</h4>
+                          <p>{formatDate(confirmedBookingData[0]?.checkIn)}</p>
                         </div>
                       </div>
                       <div className="col-xl-3 col-lg-6 col-sm-6">
                         <div className="order-details-item">
-                          <h4>Order Number:</h4>
-                          <p>#TG-0985</p>
+                          <h4>Check-out Date:</h4>
+                          <p>{formatDate(confirmedBookingData[0]?.checkOut)}</p>
                         </div>
                       </div>
                       <div className="col-xl-3 col-lg-6 col-sm-6">
                         <div className="order-details-item">
-                          <h4>Payment Method:</h4>
-                          <p>Credit Card</p>
+                          <h4>Booking Number:</h4>
+                          <p>{confirmedBookingNumber}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {cartProducts?.length ? (
-                  <>
-                    <div className="order-info-wrapper">
-                      <h4 className="order-info-title">Order Details</h4>
-
-                      <div className="order-info-list">
-                        <ul>
-                          <li className="order-info-list-header">
-                            <h4>Product</h4>
-                            <h4>Total</h4>
-                          </li>
-
-                          {cartProducts?.map((item, index) => {
-                            return (
-                              <li key={index} className="order-info-list-desc">
-                                <p>
-                                  {item?.title} <span> x {item?.quantity}</span>
-                                </p>
-                                <span>${item?.price * item?.quantity}</span>
-                              </li>
-                            );
-                          })}
-
-                          <li className="order-info-list-subtotal">
-                            <span>Subtotal</span>
-                            <span>${totalPrice.toFixed(2)}</span>
-                          </li>
-
-                          <li className="order-info-list-shipping">
-                            <span>Shipping</span>
-                            <div className="order-info-list-shipping-item d-flex flex-column align-items-end">
-                              <span>
-                                <input id="shipping_info" type="checkbox" />
-                                <label htmlFor="shipping_info">
-                                  {shippingTitle}:{" "}
-                                  <span>${priceNum.toFixed(2)}</span>
-                                </label>
-                              </span>
-                            </div>
-                          </li>
-
-                          <li className="order-info-list-total">
-                            <span>Total</span>
-                            <span>${totalAmount.toFixed(2)}</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="order-info-wrapper">
-                      <h4 className="order-info-title">Order Details</h4>
-
-                      <div className="order-info-list">
-                        <ul>
-                          <li className="order-info-list-header">
-                            <h4>Product</h4>
-                            <h4>Total</h4>
-                          </li>
-
-                          <li className="order-info-list-desc">
-                            <p>
-                              Saltstayz Short sleeve t-shirts <span> x 2</span>
-                            </p>
-                            <span>$499.00</span>
-                          </li>
-                          <li className="order-info-list-desc">
-                            <p>
-                              Saltstayz Backpack <span> x 1</span>
-                            </p>
-                            <span>$140.00</span>
-                          </li>
-
-                          <li className="order-info-list-subtotal">
-                            <span>Subtotal</span>
-                            <span>$766.00</span>
-                          </li>
-
-                          <li className="order-info-list-shipping">
-                            <span>Shipping</span>
-                            <div className="order-info-list-shipping-item d-flex flex-column align-items-end">
-                              <span>
-                                <input id="shipping_info" type="checkbox" />
-                                <label htmlFor="shipping_info">
-                                  Flat rate::
-                                  <span>$20.00</span>
-                                </label>
-                              </span>
-                            </div>
-                          </li>
-
-                          <li className="order-info-list-total">
-                            <span>Total</span>
-                            <span>$788.00</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </>
-                )}
+                <div className="order-info-wrapper">
+                  <h4 className="order-info-title">Booking Details</h4>
+                  <div className="order-info-list">
+                    <ul>
+                      <li className="order-info-list-header">
+                        <h4>Room</h4>
+                        <h4>Total</h4>
+                      </li>
+                      <li className="order-info-list-desc">
+                        <p>
+                        {confirmedBookings[0]?.Room_Name} <span> x {confirmedBookingData[0]?.room}</span>
+                        </p>
+                        <span>{confirmedBookings[0]?.currency_sign}{total.toFixed(2)}</span>
+                      </li>
+                      <li className="order-info-list-subtotal">
+                        <span>Subtotal</span>
+                        <span>{bookings[0]?.currency_sign}{total.toFixed(2)}</span>
+                      </li>
+                      <li className="order-info-list-shipping">
+                        <span>Taxes</span>
+                        <div className="order-info-list-shipping-item d-flex flex-column align-items-end">
+                          <span>
+                            <input id="shipping_info" type="checkbox" checked readOnly />
+                            <label htmlFor="shipping_info">
+                              Included in price
+                            </label>
+                          </span>
+                        </div>
+                      </li>
+                      <li className="order-info-list-total">
+                        <span>Total</span>
+                        <span>{bookings[0]?.currency_sign}{total.toFixed(2)}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="print-button-wrapper no-print" style={{ textAlign: 'center', marginTop: '20px' }}>
+                  <button onClick={handlePrint} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
+                    Print Booking Confirmation
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -2,12 +2,16 @@
 import AddCuponForm from "@/forms/AddCuponForm";
 import React, { useState } from "react";
 
+
+
 const AddCuponMain = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+
+ 
 
   return (
     <>
