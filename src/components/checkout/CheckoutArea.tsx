@@ -217,14 +217,14 @@ const CheckoutArea: React.FC = () => {
     const bookingBody = createBookingBody();
     console.log("Booking Body:", bookingBody);
     try {
-      // const result = await sendBookingRequest(bookingBody);
-      // console.log("Booking Result:", result);
-      const result = {
-        ReservationNo: 'SR15369',
-        SubReservationNo: [ 'SR15369' ],
-        Inventory_Mode: 'REGULAR',
-        lang_key: 'en'
-      }
+      const result = await sendBookingRequest(bookingBody);
+      console.log("Booking Result:", result);
+      // const result = {
+      //   ReservationNo: 'SR15369',
+      //   SubReservationNo: [ 'SR15369' ],
+      //   Inventory_Mode: 'REGULAR',
+      //   lang_key: 'en'
+      // }
       if (result.ReservationNo) {
         dispatch(setBookingNumber(result.ReservationNo));
         router.push("/order");
