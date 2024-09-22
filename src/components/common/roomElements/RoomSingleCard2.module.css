@@ -621,6 +621,30 @@
     box-shadow: 0 6px 8px rgba(0, 190, 158, 0.3);
     transform: translateY(-2px);
   }
+
+  .bookNowButtonDisabled {
+    width: 100%;
+    background: linear-gradient(to right,  #e0e0e0, #e0e0e0);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 119, 190, 0.2);
+    margin-top: auto;
+  }
+
+  .bookNowButtonDisabled:hover {
+    background: linear-gradient(to right, #e0e0e0, #e0e0e0);
+    box-shadow: 0 6px 8px rgba(0, 190, 158, 0.3);
+    transform: translateY(-2px);
+  }
   
   @media (max-width: 768px) {
     .roomCard {

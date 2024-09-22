@@ -365,8 +365,7 @@ import {
   removeBooking,
 } from "@/redux/slices/bookingSlice";
 import { RootState } from "@/redux/store";
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from "next/navigation";
 
 const CustomArrow = ({ onClick, direction }: any) => (
   <button
@@ -385,7 +384,7 @@ const CustomArrow = ({ onClick, direction }: any) => (
 
 const RoomSingleCard2 = ({ room, className, tourWrapperClass }: any) => {
   console.log(room);
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
   const bookings = useSelector((state: RootState) => state.booking.bookings);
   console.log(bookings);
@@ -394,6 +393,8 @@ const RoomSingleCard2 = ({ room, className, tourWrapperClass }: any) => {
   );
   console.log(bookedRoom);
   const quantity = bookedRoom ? bookedRoom.quantity : 0;
+  const minAvaRooms = room.min_ava_rooms || 0;
+  console.log(minAvaRooms);
   console.log(quantity);
   const discount = room.deals ? parseInt(room.deals.split("|")[1]) : 0;
   const maxGuests =
@@ -408,6 +409,7 @@ const RoomSingleCard2 = ({ room, className, tourWrapperClass }: any) => {
   };
 
   const handleAddRoom = () => {
+    dispatch(removeBooking(bookings[0].Package_Id));
     dispatch(addBooking(room));
     router.push('/checkout')
   };
@@ -428,116 +430,155 @@ const RoomSingleCard2 = ({ room, className, tourWrapperClass }: any) => {
   console.log(quantity);
   return (
     <>
-    {room?.RoomImages && room.RoomImages.length > 0 && (
-       <div className={`${className} ${styles.roomCard}`}>
-       <div className={`${tourWrapperClass} ${styles.roomCardInner}`}>
-         <div className={styles.imageContainer}>
-           <Carousel
-             autoPlay={true}
-             infiniteLoop={true}
-             showStatus={false}
-             showThumbs={false}
-             interval={3000}
-             renderArrowPrev={(onClickHandler, hasPrev) =>
-               hasPrev && (
-                 <CustomArrow onClick={onClickHandler} direction="prev" />
-               )
-             }
-             renderArrowNext={(onClickHandler, hasNext) =>
-               hasNext && (
-                 <CustomArrow onClick={onClickHandler} direction="next" />
-               )
-             }
-           >
-             {room?.RoomImages && room.RoomImages.length > 0 ? (
-               room.RoomImages.map((img: any, index: any) => (
-                 <div key={index} className={styles.carouselImageWrapper}>
-                   <Image
-                     src={img.image}
-                     layout="fill"
-                     objectFit="cover"
-                     alt={`${room.Room_Name} - Image ${index + 1}`}
-                   />
-                 </div>
-               ))
-             ) : (
-               <div className={styles.carouselImageWrapper}>
-                 <Image
-                   src="/assets/images/tour/tour-1.jpg"
-                   layout="fill"
-                   objectFit="cover"
-                   alt={room.Room_Name}
-                 />
-               </div>
-             )}
-           </Carousel>
-           {discount > 0 && (
-             <div className={styles.discountBadge}>{discount}% OFF</div>
-           )}
-         </div>
-         <div className={styles.contentContainer}>
-           <h3 className={styles.roomTitle}>
-             <Link href={`/room-details/${room.Package_Id}`}>
-               {room.Room_Name}
-             </Link>
-           </h3>
-           <div className={styles.roomDetails}>
-             <div className={styles.detailItem}>
-               <Users size={16} />
-               <span>{maxGuests} guests</span>
-             </div>
-             <div className={styles.detailItem}>
-               <Moon size={16} />
-               <span>
-                 Min {minNights} night{minNights > 1 ? "s" : ""}
-               </span>
-             </div>
-           </div>
-           <div className={styles.amenities}>
-             {amenities.slice(0, 3).map((amenity: any, index: any) => (
-               <span key={index} className={styles.amenity}>
-                 {index === 0 && <Coffee size={14} />}
-                 {index === 1 && <Wifi size={14} />}
-                 {index === 2 && <Star size={14} />}
-                 {amenity}
-               </span>
-             ))}
-           </div>
-           <div className={styles.priceSection}>
-             <span className={styles.priceLabel}>Best Price Guaranteed</span>
-             {room.room_rates_info.avg_per_night_after_discount > 0 && (
-               <span className={styles.actualPrice}>
-                 {room.currency_sign || "$"}
-                 {room.room_rates_info.avg_per_night_after_discount.toFixed(2)}
-                 <span className={styles.perNight}>/night</span>
-               </span>
-             )}
-           </div>
-           {quantity > 0 ? (
-             <>
-               <button
-                 className={styles.quantityButton}
-                 onClick={handleDecrementRoom}
-               >
-                 <Minus size={16} />
-               </button>
-               <span className={styles.quantityDisplay}>{quantity}</span>
-               <button className={styles.quantityButton} onClick={handleAddRoom}>
-                 <Plus size={16} />
-               </button>
-             </>
-           ) : (
-             <button className={styles.bookNowButton} onClick={handleAddRoom}>
-               Book Now
-               <ChevronRight size={18} />
-             </button>
-           )}
-           {/* </Link> */}
-         </div>
-       </div>
-     </div>
-    ) }
-   
+      {room?.RoomImages && room.RoomImages.length > 0 && (
+        <div className={`${className} ${styles.roomCard}`}>
+          <div className={`${tourWrapperClass} ${styles.roomCardInner}`}>
+            <div className={styles.imageContainer}>
+              <Carousel
+                autoPlay={true}
+                infiniteLoop={true}
+                showStatus={false}
+                showThumbs={false}
+                interval={3000}
+                renderArrowPrev={(onClickHandler, hasPrev) =>
+                  hasPrev && (
+                    <CustomArrow onClick={onClickHandler} direction="prev" />
+                  )
+                }
+                renderArrowNext={(onClickHandler, hasNext) =>
+                  hasNext && (
+                    <CustomArrow onClick={onClickHandler} direction="next" />
+                  )
+                }
+              >
+                {room?.RoomImages && room.RoomImages.length > 0 ? (
+                  room.RoomImages.map((img: any, index: any) => (
+                    <div key={index} className={styles.carouselImageWrapper}>
+                      <Image
+                        src={img.image}
+                        layout="fill"
+                        objectFit="cover"
+                        alt={`${room.Room_Name} - Image ${index + 1}`}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className={styles.carouselImageWrapper}>
+                    <Image
+                      src="/assets/images/tour/tour-1.jpg"
+                      layout="fill"
+                      objectFit="cover"
+                      alt={room.Room_Name}
+                    />
+                  </div>
+                )}
+              </Carousel>
+              {discount > 0 && (
+                <div className={styles.discountBadge}>{discount}% OFF</div>
+              )}
+            </div>
+            <div className={styles.contentContainer}>
+              <h3 className={styles.roomTitle}>
+                <Link href={`/room-details/${room.Package_Id}`}>
+                  {room.Room_Name}
+                </Link>
+              </h3>
+              <div className={styles.roomDetails}>
+                <div className={styles.detailItem}>
+                  <Users size={16} />
+                  <span>{maxGuests} guests</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <Moon size={16} />
+                  <span>
+                    Min {minNights} night{minNights > 1 ? "s" : ""}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.amenities}>
+                {amenities.slice(0, 3).map((amenity: any, index: any) => (
+                  <span key={index} className={styles.amenity}>
+                    {index === 0 && <Coffee size={14} />}
+                    {index === 1 && <Wifi size={14} />}
+                    {index === 2 && <Star size={14} />}
+                    {amenity}
+                  </span>
+                ))}
+              </div>
+              <div className={styles.priceSection}>
+                <span className={styles.priceLabel}>Best Price Guaranteed</span>
+                {room.room_rates_info.avg_per_night_after_discount > 0 && (
+                  <span className={styles.actualPrice}>
+                    {room.currency_sign || "$"}
+                    {room.room_rates_info.avg_per_night_after_discount.toFixed(
+                      2
+                    )}
+                    <span className={styles.perNight}>/night</span>
+                  </span>
+                )}
+              </div>
+              {/* {quantity > 0 ? (
+                <>
+                  <button
+                    className={styles.quantityButton}
+                    onClick={handleDecrementRoom}
+                  >
+                    <Minus size={16} />
+                  </button>
+                  <span className={styles.quantityDisplay}>{quantity}</span>
+                  <button
+                    className={styles.quantityButton}
+                    onClick={handleAddRoom}
+                    disabled={quantity >= minAvaRooms}
+                  >
+                    <Plus size={16} />
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.bookNowButton}
+                  onClick={handleAddRoom}
+                >
+                  Book Now
+                  <ChevronRight size={18} />
+                </button>
+              )} */}
+  {quantity > 0 ? (
+                <>
+                  {/* <button
+                    className={styles.quantityButton}
+                    onClick={handleAddRoom}
+                    disabled={quantity >= minAvaRooms}
+                  >
+                    Selected
+                  </button> */}
+                   <button
+                  className={styles.bookNowButtonDisabled}
+                  onClick={handleAddRoom}
+                  disabled={true}
+                >
+                  Selected
+                  <ChevronRight size={18} />
+                </button>
+                </>
+              ) : (
+                <button
+                  className={styles.bookNowButton}
+                  onClick={handleAddRoom}
+                >
+                  Book Now
+                  <ChevronRight size={18} />
+                </button>
+              )}
+
+
+
+
+              {/* </Link> */}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

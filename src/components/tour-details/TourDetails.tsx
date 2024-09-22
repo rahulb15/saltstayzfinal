@@ -14,7 +14,6 @@
 // import axios from "axios";
 // import HotelDetailArea from "../hotel-detail-area/HotelDetailArea";
 
-
 // const Card = ({ children, className }:any) => (
 //   <div className={`bg-white shadow-lg rounded-lg overflow-hidden ${className}`}>
 //     {children}
@@ -109,7 +108,6 @@
 //       //   paymenttypeunkid: "",
 //       // };
 
-
 //       const bookingData = {
 //         Room_Details: {
 //           Room_1: {
@@ -188,7 +186,7 @@
 //       formData.append("BookingData", JSON.stringify(bookingData));
 
 //       const headers = {
-//         "Content-Type": "multipart/form-data", 
+//         "Content-Type": "multipart/form-data",
 //       };
 
 //       const response = await axios.post(
@@ -231,7 +229,6 @@
 //       console.error(err);
 //     }
 //   };
-
 
 //   const handleBookNow = async () => {
 //     try {
@@ -334,7 +331,6 @@
 //       <div className="container mx-auto px-4">
 //         <div className="flex flex-col lg:flex-row gap-8">
 //           <div className="lg:w-2/3">
-            
 
 //             <Card>
 //               <CardHeader>
@@ -376,7 +372,7 @@
 //                         <h5 className="text-lg font-semibold">{room.Room_Name}</h5>
 //                         <p className="text-sm text-gray-600">{room.Specials_Desc}</p>
 //                       </div>
-//                       <Button 
+//                       <Button
 //                         onClick={() => setSelectedRoomType(room)}
 //                         color={selectedRoomType?.Room_Name === room.Room_Name ? "secondary" : "primary"}
 //                       >
@@ -447,7 +443,7 @@
 //                 </div>
 //               </CardBody>
 //               <CardFooter>
-//                 <Button 
+//                 <Button
 //                   color="primary"
 //                   onClick={selectedRoomType ? handleBookNow : undefined}
 //                   disabled={!selectedRoomType}
@@ -483,39 +479,35 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useAppSelector } from "@/redux/hooks";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "reactstrap";
-import { Star, Calendar, Users, DollarSign, Heart, Share2 } from 'lucide-react';
-import { toast } from "react-toastify";
+import { Star, Calendar, Users, DollarSign, Heart, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { RootState } from "@/redux/store";
-import { Carousel } from 'react-responsive-carousel';
+import { useRouter } from 'next/navigation'
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import HotelDetailArea from "../hotel-detail-area/HotelDetailArea";
 // import TourAreaTwo from "./TourAreaTwo";
 import TourAreaTwo from "../home-two/TourAreaTwo";
 
-
-
-const Card = ({ children, className }:any) => (
+const Card = ({ children, className }: any) => (
   <div className={`bg-white shadow-lg rounded-lg overflow-hidden ${className}`}>
     {children}
   </div>
 );
 
-const CardHeader = ({ children }:any) => (
-  <div className="px-6 py-4 border-b border-gray-200">
-    {children}
-  </div>
+const CardHeader = ({ children }: any) => (
+  <div className="px-6 py-4 border-b border-gray-200">{children}</div>
 );
 
-const CardBody = ({ children }:any) => (
-  <div className="px-6 py-4">
-    {children}
-  </div>
+const CardBody = ({ children }: any) => (
+  <div className="px-6 py-4">{children}</div>
 );
 
-const CardFooter = ({ children }:any) => (
+const CardFooter = ({ children }: any) => (
   <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
     {children}
   </div>
@@ -528,26 +520,46 @@ const HotelDetails = ({ id }: { id: string | number }) => {
   const [checkOut, setCheckOut] = useState("");
   const [adult, setAdult] = useState(1);
   const [children, setChildren] = useState(0);
-
+  const router = useRouter();
   const { rooms } = useAppSelector((state: RootState) => state.room);
   console.log(rooms);
-  const { bookings } : any = useAppSelector((state: RootState) => state.app);
+  // const { bookings }: any = useAppSelector((state: RootState) => state.app);
+  // console.log(bookings);
+  const bookingData: any = useSelector(
+    (state: RootState) => state.app.bookings
+  );
+  const bookings = useSelector((state: RootState) => state.booking.bookings);
+  console.log(bookings);
+
+  console.log("bookingData", bookingData);
 
   useEffect(() => {
-    if (bookings && bookings[0]) {
-      setCheckIn(bookings[0].checkIn);
-      setCheckOut(bookings[0].checkOut);
-      setAdult(bookings[0].adult);
-      setChildren(bookings[0].children);
+    if(rooms.length === 0) {
+      toast.error("No rooms available");
+      router.push("/");
     }
-  }, [bookings]);
+  }, [rooms]);
+
+  useEffect(() => {
+    if (bookingData && bookingData[0]) {
+      setCheckIn(bookingData[0].checkIn);
+      setCheckOut(bookingData[0].checkOut);
+      setAdult(bookingData[0].adult);
+      setChildren(bookingData[0].children);
+    }
+  }, [bookingData]);
 
   const wishListHandle = () => {
     setIsInWishList(!isInWishList);
     toast.success(isInWishList ? "Deleted from wishlist" : "Saved to wishlist");
   };
 
-  const handleChangeBooking = async (firstName:any, lastName:any, email:any, phone:any) => {
+  const handleChangeBooking = async (
+    firstName: any,
+    lastName: any,
+    email: any,
+    phone: any
+  ) => {
     try {
       const queryParams = new URLSearchParams({
         request_type: "InsertBooking",
@@ -590,7 +602,6 @@ const HotelDetails = ({ id }: { id: string | number }) => {
       //   Languagekey: "",
       //   paymenttypeunkid: "",
       // };
-
 
       const bookingData = {
         Room_Details: {
@@ -670,7 +681,7 @@ const HotelDetails = ({ id }: { id: string | number }) => {
       formData.append("BookingData", JSON.stringify(bookingData));
 
       const headers = {
-        "Content-Type": "multipart/form-data", 
+        "Content-Type": "multipart/form-data",
       };
 
       const response = await axios.post(
@@ -714,7 +725,6 @@ const HotelDetails = ({ id }: { id: string | number }) => {
     }
   };
 
-
   const handleBookNow = async () => {
     try {
       Swal.fire({
@@ -731,14 +741,10 @@ const HotelDetails = ({ id }: { id: string | number }) => {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           const firstName = (
-            document.getElementById(
-              "swal-input-first-name"
-            ) as HTMLInputElement
+            document.getElementById("swal-input-first-name") as HTMLInputElement
           ).value;
           const lastName = (
-            document.getElementById(
-              "swal-input-last-name"
-            ) as HTMLInputElement
+            document.getElementById("swal-input-last-name") as HTMLInputElement
           ).value;
 
           const email = (
@@ -784,7 +790,12 @@ const HotelDetails = ({ id }: { id: string | number }) => {
           // setEmail(email);
           // setName(result.value.firstName);
           // setLastName(result.value.lastName);
-          handleChangeBooking(result.value.firstName, result.value.lastName, email, phone);
+          handleChangeBooking(
+            result.value.firstName,
+            result.value.lastName,
+            email,
+            phone
+          );
 
           // Swal.fire({
           //   title: "Booking successful",
@@ -811,8 +822,8 @@ const HotelDetails = ({ id }: { id: string | number }) => {
 
   return (
     <>
-    <HotelDetailArea hotelData={selectedRoomType} rooms={rooms}/>
-    {/* <section className="bg-gray-100 py-12">
+      <HotelDetailArea hotelData={selectedRoomType} rooms={rooms} />
+      {/* <section className="bg-gray-100 py-12">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-2/3">
@@ -954,10 +965,6 @@ const HotelDetails = ({ id }: { id: string | number }) => {
         </div>
       </div>
     </section> */}
-
-
-
-
     </>
   );
 };
