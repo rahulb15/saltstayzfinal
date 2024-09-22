@@ -409,7 +409,7 @@ const RoomSingleCard2 = ({ room, className, tourWrapperClass }: any) => {
   };
 
   const handleAddRoom = () => {
-    dispatch(removeBooking(bookings[0].Package_Id));
+    dispatch(removeBooking(bookings[0]?.Package_Id));
     dispatch(addBooking(room));
     router.push('/checkout')
   };
