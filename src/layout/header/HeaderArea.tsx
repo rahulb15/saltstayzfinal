@@ -38,13 +38,13 @@ const HeaderArea = () => {
               <div className="header-right d-flex align-items-center gap-24">
                 <div className="header-btn d-none d-sm-block">
                   <Link
-                    href="/https://themeforest.net/item/tourigo-tour-travel-html5-template/51357906?s_rank=1"
+                    href="/sign-in"
                     className="bd-primary-btn btn-style has-arrow is-bg radius-60"
                   >
                     <span className="bd-primary-btn-arrow arrow-right">
                       <i className="fa-regular fa-arrow-right"></i>
                     </span>
-                    <span className="bd-primary-btn-text">Book Now</span>
+                    <span className="bd-primary-btn-text">Sign In</span>
                     <span className="bd-primary-btn-circle"></span>
                     <span className="bd-primary-btn-arrow arrow-left">
                       <i className="fa-regular fa-arrow-right"></i>

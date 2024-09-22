@@ -669,14 +669,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onValidationChange }) => {
           </div>
         </div>
          {/* Debug Information */}
-         <div className="col-md-12">
+         {/* <div className="col-md-12">
           <div className="checkout-input">
             <label>Debug Information</label>
             <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
               {debugInfo}
             </pre>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

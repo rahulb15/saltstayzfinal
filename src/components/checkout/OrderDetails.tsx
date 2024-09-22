@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { removeCoupon } from "@/redux/slices/bookingSlice";
 import SelectPaymentType from "./SelectPaymentType";
+import CustomSwal from "../swal/CustomSwal";
 
 interface OrderDetailsProps {
   onSubmit: (shippingTitle: string, shippingAmount: number) => void;
@@ -22,6 +23,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   const [total, setTotal] = useState(0);
   const [shippingAmount] = useState(0);
   const [shippingTitle] = useState("");
+
+  const [swalProps, setSwalProps] = useState<any>({
+    title: "",
+    text: "",
+    icon: "success" as const,
+  });
+  const [showSwal, setShowSwal] = useState(false);
 
   const bookings = useSelector((state: RootState) => state.booking.bookings);
   const bookingData: any = useSelector((state: RootState) => state.app.bookings);
@@ -46,7 +54,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
     if (isFormValid) {
       onSubmit(shippingTitle, shippingAmount);
     } else {
-      console.log("Form is not valid. Please check all required fields.");
+      // console.log("Form is not valid. Please check all required fields.");
+      setSwalProps({
+        title: "Form is not valid",
+        text: "Please check all required fields.",
+        icon: "error",
+      });
+      setShowSwal(true);
     }
   };
 
@@ -55,6 +69,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   };
 
   return (
+    <>
     <div className="col-lg-5">
       <div className="checkout-place sidebar-sticky">
         <h3 className="checkout-place-title">Your Order</h3>
@@ -77,6 +92,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         <SubmitButton handleSubmit={handleSubmit} />
       </div>
     </div>
+          {showSwal && <CustomSwal {...swalProps} />}
+          </>
+
   );
 };
 

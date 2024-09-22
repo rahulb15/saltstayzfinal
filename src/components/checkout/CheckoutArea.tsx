@@ -153,7 +153,7 @@ const CheckoutArea: React.FC = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [paymentMode, setPaymentMode] = useState("");
   const router = useRouter();
-  const [swalProps, setSwalProps] = useState({
+  const [swalProps, setSwalProps] = useState<any>({
     title: "",
     text: "",
     icon: "success" as const,
@@ -175,15 +175,41 @@ const CheckoutArea: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("Form submitted");
     if (!isFormValid) {
       console.log("Form is not valid. Please check all required fields.");
+      // console.log("Form is not valid. Please check all required fields.");
+      setSwalProps({
+        title: "Invalid Form",
+        text: "Please check all required fields.",
+        icon: "error",
+      });
+      setShowSwal(true);
+      return;
+    }
+
+    //if no payment mode selected
+    if (paymentMode === "") {
+      console.log("Please select a payment mode");
+      setSwalProps({
+        title: "Payment Mode",
+        text: "Please select a payment mode.",
+        icon: "info",
+      });
+      setShowSwal(true);
       return;
     }
 
     if (paymentMode === "pay_on_visit") {
       await processBooking();
     } else if (paymentMode === "online_payment") {
-      console.log("Online payment to be implemented");
+      // console.log("Online payment to be implemented");
+      setSwalProps({
+        title: "Online Payment",
+        text: "Online payment to be implemented",
+        icon: "info",
+      });
+      setShowSwal(true);
     }
   };
 
