@@ -260,8 +260,8 @@ const OrderMain = () => {
   // Calculate the total price, tax, and exclusive tax
   const total = confirmedBookings[0]?.room_rates_info.totalprice_inclusive_all || 0;
   const tax = confirmedBookings[0]?.room_rates_info.tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
-  const exclusiveTax = confirmedBookings[0]?.room_rates_info.exclusive_tax['2024-09-23'] || 0;
-  const totalWithTax = total + tax + exclusiveTax;
+  const exclusiveTax = confirmedBookings[0]?.room_rates_info.exclusive_tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
+  const totalWithTax = total + tax;
 
   return (
     <>
@@ -362,10 +362,10 @@ const OrderMain = () => {
                         <span>Tax</span>
                         <span>{confirmedBookings[0]?.currency_sign}{tax.toFixed(2)}</span>
                       </li>
-                      <li className="order-info-list-shipping">
+                      {/* <li className="order-info-list-shipping">
                         <span>Exclusive Tax</span>
                         <span>{confirmedBookings[0]?.currency_sign}{exclusiveTax.toFixed(2)}</span>
-                      </li>
+                      </li> */}
                       <li className="order-info-list-total">
                         <span>Total (with taxes)</span>
                         <span>{confirmedBookings[0]?.currency_sign}{totalWithTax.toFixed(2)}</span>
