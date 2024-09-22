@@ -32,6 +32,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   const [showSwal, setShowSwal] = useState(false);
 
   const bookings = useSelector((state: RootState) => state.booking.bookings);
+  console.log("bookings", bookings);
   const bookingData: any = useSelector((state: RootState) => state.app.bookings);
   const discountedBookings = useSelector((state: RootState) => state.booking.discountedBookings);
 
@@ -98,12 +99,83 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   );
 };
 
-const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon } : any) => {
+// const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon } : any) => {
+//   const hasDiscount = discountedBookings && discountedBookings.length > 0;
+//   const discountedBooking = hasDiscount ? discountedBookings[0] : null;
+//   const nights = bookingData.length > 0 ? calculateNights(bookingData[0].checkIn, bookingData[0].checkOut) : 0;
+//   const originalTotal = total;
+//   const discountedTotal = hasDiscount ? discountedBooking.discountedPrice * nights : total;
+
+//   return (
+//     <div className="order-info-list">
+//       <ul>
+//         <li className="order-info-list-header">
+//           <h4>Product</h4>
+//           <h4>Total</h4>
+//         </li>
+//         {bookings.length > 0 && bookingData.length > 0 && (
+//           <>
+//             <li className="order-info-list-desc">
+//               <p>
+//                 {bookings[0].Room_Name}{" "}
+//                 <span> x {nights} nights</span>
+//               </p>
+//               <span>${originalTotal.toFixed(2)}</span>
+//             </li>
+//             {hasDiscount && (
+//               <li className="order-info-list-desc text-success">
+//                 <p>Discounted Price *</p>
+//                 <span>${discountedTotal.toFixed(2)}</span>
+//               </li>
+//             )}
+//           </>
+//         )}
+//         <li className="order-info-list-subtotal">
+//           <span>Subtotal</span>
+//           <span>${(hasDiscount ? discountedTotal : originalTotal).toFixed(2)}</span>
+//         </li>
+//         {hasDiscount && (
+//           <li className="order-info-list-discount text-success">
+//             <span>Discount Applied</span>
+//             <span>-${(originalTotal - discountedTotal).toFixed(2)}</span>
+//           </li>
+//         )}
+//         <li className="order-info-list-total">
+//           <span>Total</span>
+//           <span>${((hasDiscount ? discountedTotal : originalTotal) + shippingAmount).toFixed(2)}</span>
+//         </li>
+//       </ul>
+//       {hasDiscount && (
+//         <div className="mt-2">
+//           <p className="text-success">
+//             * Coupon {discountedBooking.couponCode} applied successfully!
+//           </p>
+//           <button 
+//             onClick={onRemoveCoupon}
+//             className="btn btn-sm btn-outline-danger"
+//           >
+//             Remove Coupon
+//           </button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon }:any) => {
   const hasDiscount = discountedBookings && discountedBookings.length > 0;
   const discountedBooking = hasDiscount ? discountedBookings[0] : null;
   const nights = bookingData.length > 0 ? calculateNights(bookingData[0].checkIn, bookingData[0].checkOut) : 0;
   const originalTotal = total;
   const discountedTotal = hasDiscount ? discountedBooking.discountedPrice * nights : total;
+
+  const booking = bookings[0];
+  console.log("bookingData", bookingData);
+  const roomRatesInfo = booking.room_rates_info;
+  console.log("roomRatesInfo", roomRatesInfo);
+  const subtotal = roomRatesInfo.totalprice_room_only;
+  const taxAmount = roomRatesInfo.tax[bookingData[0]?.checkIn];
+  const totalWithTax = roomRatesInfo.totalprice_inclusive_all;
 
   return (
     <div className="order-info-list">
@@ -116,10 +188,14 @@ const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calcul
           <>
             <li className="order-info-list-desc">
               <p>
-                {bookings[0].Room_Name}{" "}
+                {booking.Room_Name}{" "}
                 <span> x {nights} nights</span>
               </p>
-              <span>${originalTotal.toFixed(2)}</span>
+              <span>${subtotal.toFixed(2)}</span>
+            </li>
+            <li className="order-info-list-desc">
+              <p>Taxes (CGST + SGST)</p>
+              <span>${taxAmount?.toFixed(2)}</span>
             </li>
             {hasDiscount && (
               <li className="order-info-list-desc text-success">
@@ -131,7 +207,7 @@ const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calcul
         )}
         <li className="order-info-list-subtotal">
           <span>Subtotal</span>
-          <span>${(hasDiscount ? discountedTotal : originalTotal).toFixed(2)}</span>
+          <span>${subtotal.toFixed(2)}</span>
         </li>
         {hasDiscount && (
           <li className="order-info-list-discount text-success">
@@ -139,9 +215,13 @@ const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calcul
             <span>-${(originalTotal - discountedTotal).toFixed(2)}</span>
           </li>
         )}
+        <li className="order-info-list-tax">
+          <span>Taxes</span>
+          <span>${taxAmount?.toFixed(2)}</span>
+        </li>
         <li className="order-info-list-total">
-          <span>Total</span>
-          <span>${((hasDiscount ? discountedTotal : originalTotal) + shippingAmount).toFixed(2)}</span>
+          <span>Total (including taxes)</span>
+          <span>${totalWithTax?.toFixed(2)}</span>
         </li>
       </ul>
       {hasDiscount && (
