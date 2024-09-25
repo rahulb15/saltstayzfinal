@@ -245,9 +245,10 @@ const CheckoutArea: React.FC = () => {
 
   const createBookingBody = () => {
     const booking = discountedBookings.length > 0 ? discountedBookings[0] : bookings[0];
+    console.log("Booking:", booking);
     const appBooking = bookingData[0];
     const baseRate = discountedBookings.length > 0 
-    ? booking.discountedPrice.toString()
+    ? booking.price.toString()
     : booking.room_rates_info.avg_per_night_without_tax.toString();
 
     return {
@@ -312,7 +313,7 @@ const CheckoutArea: React.FC = () => {
       }
 
       const result = await response.json();
-      // console.log('Booking Result:', result);
+      console.log('Booking Result:', result);
       // {
       //   ReservationNo: 'SR15325',
       //   SubReservationNo: [ 'SR15325' ],

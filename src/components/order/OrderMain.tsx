@@ -219,13 +219,15 @@ const OrderMain = () => {
   const bookingNumber = useSelector((state: RootState) => state.booking.bookingNumber);
   const bookings = useSelector((state: RootState) => state.booking.bookings);
   const bookingData:any = useSelector((state: RootState) => state.app.bookings);
+  const discountedBookings = useSelector((state: RootState) => state.booking.discountedBookings);
+  const booking = discountedBookings.length > 0 ? discountedBookings[0] : bookings[0];
 
   useEffect(() => {
     if (bookings.length > 0 && bookingData.length > 0) {
       const confirmedBookingData = {
         bookingNumber,
-        bookings,
-        bookingData,
+        bookings: booking,
+        bookingData
       };
       dispatch(setConfirmedBooking(confirmedBookingData));
       dispatch(clearBookings());
@@ -233,7 +235,7 @@ const OrderMain = () => {
       dispatch(resetFormData());
       dispatch(setRooms({ rooms: [] }));
     }
-  }, [confirmedBooking, bookings, bookingData, bookingNumber, dispatch]);
+  }, [confirmedBooking, bookings, bookingData, bookingNumber, discountedBookings, dispatch]);
 
   const calculateNights = (checkIn: string, checkOut: string) => {
     const start = new Date(checkIn);
@@ -255,13 +257,25 @@ const OrderMain = () => {
     return <div>Loading...</div>;
   }
 
+  console.log("confirmedBooking", confirmedBooking);
+
   const { bookingNumber: confirmedBookingNumber, bookings: confirmedBookings, bookingData: confirmedBookingData } = confirmedBooking;
 
   // Calculate the total price, tax, and exclusive tax
-  const total = confirmedBookings[0]?.room_rates_info.totalprice_inclusive_all || 0;
-  const tax = confirmedBookings[0]?.room_rates_info.tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
-  const exclusiveTax = confirmedBookings[0]?.room_rates_info.exclusive_tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
-  const totalWithTax = total + tax;
+  const total = confirmedBooking?.bookings?.room_rates_info.totalprice_inclusive_all || 0;
+  const tax = confirmedBooking?.bookings?.room_rates_info.tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
+  const exclusiveTax = confirmedBooking?.bookings?.room_rates_info.exclusive_tax[confirmedBooking?.bookingData[0]?.checkIn] || 0;
+  const hasDiscount = discountedBookings && discountedBookings.length > 0;
+
+  // quantity: 1,
+  // discountedPrice: 1637.5,
+  // couponCode: 'SALT60',
+  // discount: 86.18000000000006,
+  // price: 1462.05
+  // const totals = discountedBookings.length > 0 ? confirmedBooking?.bookings?.price + tax
+  //  : total;
+
+  // const totalWithTax = totals;
 
   return (
     <>
@@ -350,25 +364,37 @@ const OrderMain = () => {
                       </li>
                       <li className="order-info-list-desc">
                         <p>
-                        {confirmedBookings[0]?.Room_Name} <span> x {confirmedBookingData[0]?.room}</span>
+                        {confirmedBooking?.bookings?.Room_Name} <span> x {confirmedBookingData[0]?.room}</span>
                         </p>
-                        <span>{confirmedBookings[0]?.currency_sign}{total.toFixed(2)}</span>
+                        <span>{confirmedBooking?.bookings?.currency_sign}{exclusiveTax.toFixed(2)}</span>
                       </li>
-                      <li className="order-info-list-subtotal">
+                      {/* <li className="order-info-list-subtotal">
                         <span>Subtotal</span>
                         <span>{confirmedBookings[0]?.currency_sign}{total.toFixed(2)}</span>
-                      </li>
+                      </li> */}
                       <li className="order-info-list-shipping">
                         <span>Tax</span>
-                        <span>{confirmedBookings[0]?.currency_sign}{tax.toFixed(2)}</span>
+                        <span>{confirmedBooking?.bookings?.currency_sign}{tax.toFixed(2)}</span>
                       </li>
+                      {/* <li className="order-info-list-discount text-success"> */}
+            {/* <span>Discount Applied</span> */}
+            {/* <span>-₹{(confirmedBooking?.bookings?.discount).toFixed(2)}</span> */}
+          {/* </li> */}
+          {hasDiscount && (
+            <li className="order-info-list-discount text-success">
+              <span>Discount Applied</span>
+              <span>-₹{(confirmedBooking?.bookings?.discount).toFixed(2)}</span>
+            </li>
+          )}
                       {/* <li className="order-info-list-shipping">
                         <span>Exclusive Tax</span>
                         <span>{confirmedBookings[0]?.currency_sign}{exclusiveTax.toFixed(2)}</span>
                       </li> */}
                       <li className="order-info-list-total">
                         <span>Total (with taxes)</span>
-                        <span>{confirmedBookings[0]?.currency_sign}{totalWithTax.toFixed(2)}</span>
+                        <span>{confirmedBooking?.bookings?.currency_sign}{
+                          hasDiscount ? (total - confirmedBooking?.bookings?.discount).toFixed(2) : total.toFixed(2)
+                        }</span>
                       </li>
                     </ul>
                   </div>

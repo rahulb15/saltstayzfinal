@@ -73,7 +73,9 @@ const AddCuponForm = () => {
 
           if (existingBooking) {
             const originalPrice = existingBooking.room_rates_info.totalprice_inclusive_all;
+            console.log("originalPrice", originalPrice);
             const discountedPrice = room.room_rates_info.totalprice_inclusive_all;
+            console.log("discountedPrice", discountedPrice);
 
             if (discountedPrice < originalPrice) {
               return {
@@ -81,6 +83,7 @@ const AddCuponForm = () => {
                 discountedPrice,
                 couponCode: coupon,
                 discount: originalPrice - discountedPrice,
+                price: room.room_rates_info.avg_per_night_without_tax,
               };
             }
           }

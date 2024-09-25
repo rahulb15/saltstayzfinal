@@ -5,7 +5,8 @@ import { RootState } from "@/redux/store";
 import { removeCoupon } from "@/redux/slices/bookingSlice";
 import SelectPaymentType from "./SelectPaymentType";
 import CustomSwal from "../swal/CustomSwal";
-
+import { motion, AnimatePresence } from 'framer-motion';
+import ExpandedDetails from './ExpandedDetails';
 interface OrderDetailsProps {
   onSubmit: (shippingTitle: string, shippingAmount: number) => void;
   isFormValid: boolean;
@@ -99,12 +100,24 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   );
 };
 
-// const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon } : any) => {
+
+
+// const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon }:any) => {
+//   console.log("discountedBookings", discountedBookings);
 //   const hasDiscount = discountedBookings && discountedBookings.length > 0;
 //   const discountedBooking = hasDiscount ? discountedBookings[0] : null;
 //   const nights = bookingData.length > 0 ? calculateNights(bookingData[0].checkIn, bookingData[0].checkOut) : 0;
 //   const originalTotal = total;
 //   const discountedTotal = hasDiscount ? discountedBooking.discountedPrice * nights : total;
+//   console.log("discountedTotal", discountedTotal);
+
+//   const booking = bookings[0];
+//   console.log("bookingData", bookingData);
+//   const roomRatesInfo = booking.room_rates_info;
+//   console.log("roomRatesInfo", roomRatesInfo);
+//   const subtotal = roomRatesInfo.totalprice_room_only;
+//   const taxAmount = roomRatesInfo.tax[bookingData[0]?.checkIn];
+//   const totalWithTax = roomRatesInfo.totalprice_inclusive_all;
 
 //   return (
 //     <div className="order-info-list">
@@ -117,32 +130,51 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
 //           <>
 //             <li className="order-info-list-desc">
 //               <p>
-//                 {bookings[0].Room_Name}{" "}
+//                 {booking.Room_Name}{" "}
 //                 <span> x {nights} nights</span>
 //               </p>
-//               <span>${originalTotal.toFixed(2)}</span>
+//               <span>₹{subtotal.toFixed(2)}</span>
 //             </li>
-//             {hasDiscount && (
+//             <li className="order-info-list-desc">
+//               <p>Taxes (CGST + SGST)</p>
+//               <span>₹{taxAmount?.toFixed(2)}</span>
+//             </li>
+//             {/* {hasDiscount && (
 //               <li className="order-info-list-desc text-success">
 //                 <p>Discounted Price *</p>
-//                 <span>${discountedTotal.toFixed(2)}</span>
+//                 <span>₹{discountedTotal.toFixed(2)}</span>
 //               </li>
-//             )}
+//             )} */}
 //           </>
 //         )}
-//         <li className="order-info-list-subtotal">
+//         {/* <li className="order-info-list-subtotal">
 //           <span>Subtotal</span>
-//           <span>${(hasDiscount ? discountedTotal : originalTotal).toFixed(2)}</span>
-//         </li>
+//           <span>₹{subtotal.toFixed(2)}</span>
+//         </li> */}
 //         {hasDiscount && (
 //           <li className="order-info-list-discount text-success">
 //             <span>Discount Applied</span>
-//             <span>-${(originalTotal - discountedTotal).toFixed(2)}</span>
+//             <span>-₹{(originalTotal - discountedTotal).toFixed(2)}</span>
 //           </li>
 //         )}
-//         <li className="order-info-list-total">
-//           <span>Total</span>
-//           <span>${((hasDiscount ? discountedTotal : originalTotal) + shippingAmount).toFixed(2)}</span>
+//         {/* <li className="order-info-list-tax">
+//           <span>Taxes</span>
+//           <span>₹{taxAmount?.toFixed(2)}</span>
+//         </li> */}
+//         {/* <li className="order-info-list-total">
+//           <span>Total (including taxes)</span>
+//           <span>₹{totalWithTax?.toFixed(2)}</span>
+//         </li> */}
+//           <li className="order-info-list-total">
+//           <span>Total (including taxes)</span>
+//           {hasDiscount ? (
+//             <span>
+//               <span className="text-decoration-line-through text-muted me-2">₹{totalWithTax.toFixed(2)}</span>
+//               <span className="text-success">₹{discountedTotal.toFixed(2)}</span>
+//             </span>
+//           ) : (
+//             <span>₹{totalWithTax.toFixed(2)}</span>
+//           )}
 //         </li>
 //       </ul>
 //       {hasDiscount && (
@@ -163,11 +195,15 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
 // };
 
 const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calculateNights, shippingAmount, onRemoveCoupon }:any) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  console.log("discountedBookings", discountedBookings);
   const hasDiscount = discountedBookings && discountedBookings.length > 0;
   const discountedBooking = hasDiscount ? discountedBookings[0] : null;
   const nights = bookingData.length > 0 ? calculateNights(bookingData[0].checkIn, bookingData[0].checkOut) : 0;
   const originalTotal = total;
   const discountedTotal = hasDiscount ? discountedBooking.discountedPrice * nights : total;
+  console.log("discountedTotal", discountedTotal);
 
   const booking = bookings[0];
   console.log("bookingData", bookingData);
@@ -186,42 +222,81 @@ const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calcul
         </li>
         {bookings.length > 0 && bookingData.length > 0 && (
           <>
-            <li className="order-info-list-desc">
-              <p>
-                {booking.Room_Name}{" "}
-                <span> x {nights} nights</span>
-              </p>
-              <span>${subtotal.toFixed(2)}</span>
+               <li className="relative">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{booking.Room_Name}</p>
+                  <p className="text-sm text-gray-500">{nights} night{nights > 1 ? 's' : ''}</p>
+                </div>
+                <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
+              </div>
+              <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="w-full mt-2 py-2 bg-gray-100 hover:bg-gray-200 transition-colors rounded-md flex items-center justify-center"
+              >
+                <span className="mr-2 text-sm">{isExpanded ? 'Hide' : 'View'} details</span>
+                <motion.span
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  ▼
+                </motion.span>
+              </button>
             </li>
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.li
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden bg-gray-50 rounded-md"
+                >
+                        <ExpandedDetails bookingData={bookingData} nights={nights} />
+
+                </motion.li>
+              )}
+            </AnimatePresence>
             <li className="order-info-list-desc">
               <p>Taxes (CGST + SGST)</p>
-              <span>${taxAmount?.toFixed(2)}</span>
+              <span>₹{taxAmount?.toFixed(2)}</span>
             </li>
-            {hasDiscount && (
+            {/* {hasDiscount && (
               <li className="order-info-list-desc text-success">
                 <p>Discounted Price *</p>
-                <span>${discountedTotal.toFixed(2)}</span>
+                <span>₹{discountedTotal.toFixed(2)}</span>
               </li>
-            )}
+            )} */}
           </>
         )}
-        <li className="order-info-list-subtotal">
+        {/* <li className="order-info-list-subtotal">
           <span>Subtotal</span>
-          <span>${subtotal.toFixed(2)}</span>
-        </li>
+          <span>₹{subtotal.toFixed(2)}</span>
+        </li> */}
         {hasDiscount && (
           <li className="order-info-list-discount text-success">
             <span>Discount Applied</span>
-            <span>-${(originalTotal - discountedTotal).toFixed(2)}</span>
+            <span>-₹{(originalTotal - discountedTotal).toFixed(2)}</span>
           </li>
         )}
-        <li className="order-info-list-tax">
+        {/* <li className="order-info-list-tax">
           <span>Taxes</span>
-          <span>${taxAmount?.toFixed(2)}</span>
-        </li>
-        <li className="order-info-list-total">
+          <span>₹{taxAmount?.toFixed(2)}</span>
+        </li> */}
+        {/* <li className="order-info-list-total">
           <span>Total (including taxes)</span>
-          <span>${totalWithTax?.toFixed(2)}</span>
+          <span>₹{totalWithTax?.toFixed(2)}</span>
+        </li> */}
+          <li className="order-info-list-total">
+          <span>Total (including taxes)</span>
+          {hasDiscount ? (
+            <span>
+              <span className="text-decoration-line-through text-muted me-2">₹{totalWithTax.toFixed(2)}</span>
+              <span className="text-success">₹{discountedTotal.toFixed(2)}</span>
+            </span>
+          ) : (
+            <span>₹{totalWithTax.toFixed(2)}</span>
+          )}
         </li>
       </ul>
       {hasDiscount && (
@@ -240,6 +315,7 @@ const OrderSummary = ({ bookings, bookingData, discountedBookings, total, calcul
     </div>
   );
 };
+
 
 const TermsAgreement = () => (
   <div className="checkout-agree">
