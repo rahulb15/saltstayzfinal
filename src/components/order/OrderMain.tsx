@@ -366,7 +366,7 @@ const OrderMain = () => {
                         <p>
                         {confirmedBooking?.bookings?.Room_Name} <span> x {confirmedBookingData[0]?.room}</span>
                         </p>
-                        <span>{confirmedBooking?.bookings?.currency_sign}{exclusiveTax.toFixed(2)}</span>
+                        <span>{confirmedBooking?.bookings?.currency_sign}{exclusiveTax?.toFixed(2)}</span>
                       </li>
                       {/* <li className="order-info-list-subtotal">
                         <span>Subtotal</span>
@@ -374,7 +374,7 @@ const OrderMain = () => {
                       </li> */}
                       <li className="order-info-list-shipping">
                         <span>Tax</span>
-                        <span>{confirmedBooking?.bookings?.currency_sign}{tax.toFixed(2)}</span>
+                        <span>{confirmedBooking?.bookings?.currency_sign}{tax?.toFixed(2)}</span>
                       </li>
                       {/* <li className="order-info-list-discount text-success"> */}
             {/* <span>Discount Applied</span> */}
@@ -383,7 +383,7 @@ const OrderMain = () => {
           {hasDiscount && (
             <li className="order-info-list-discount text-success">
               <span>Discount Applied</span>
-              <span>-₹{(confirmedBooking?.bookings?.discount).toFixed(2)}</span>
+              <span>-₹{(confirmedBooking?.bookings?.discount)?.toFixed(2)}</span>
             </li>
           )}
                       {/* <li className="order-info-list-shipping">
@@ -393,7 +393,7 @@ const OrderMain = () => {
                       <li className="order-info-list-total">
                         <span>Total (with taxes)</span>
                         <span>{confirmedBooking?.bookings?.currency_sign}{
-                          hasDiscount ? (total - confirmedBooking?.bookings?.discount).toFixed(2) : total.toFixed(2)
+                          hasDiscount ? (total - confirmedBooking?.bookings?.discount)?.toFixed(2) : total?.toFixed(2)
                         }</span>
                       </li>
                     </ul>
